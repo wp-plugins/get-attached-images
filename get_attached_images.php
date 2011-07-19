@@ -2,7 +2,7 @@
 /*
 Plugin Name: Get Attached Images
 Plugin URI: http://solidhex.com/get-attached-images
-Description: Grabs all attached images from a post or page. Compatible with NivoSlider and jCarousel jQuery plugins.
+Description: Get Attached Images pulls all attached images from a post or page. To use it, simply echo out the function either inside or out side of the loop. Visit http://solidhex.com/get-attached-images for documentation.
 Version: 1.0
 Author: patrick@solidhex.com
 Author URI: http://solidhex.com
