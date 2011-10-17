@@ -69,21 +69,4 @@ function get_attached_images($pageid = FALSE, $size = "thumbnail", $rel = 'inter
 	}
 }
 
-function sc_show_in_post( $atts )
-{
-	extract(shortcode_atts(array(
-		'id'     => '',
-		'size'    => '',
-		'single'  => '',
-		'prepend' => '',
-		'append'  => '' 
-	), $atts ));
-	
-	$out = get_attached_images($id, $size, $single, $prepend, $append);
-	
-	return $out;
-}
-
-add_shortcode( 'get_attached_image_page_post', 'sc_show_in_post' );
-
 ?>
