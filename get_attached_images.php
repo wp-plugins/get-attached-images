@@ -3,7 +3,7 @@
 Plugin Name: Get Attached Images
 Plugin URI: http://solidhex.com/get-attached-images
 Description: Get Attached Images pulls all attached images from a post or page. To use it, simply echo out the function either inside or out side of the loop. Visit http://solidhex.com/get-attached-images for documentation.
-Version: 1.0
+Version: 1.1
 Author: patrick@solidhex.com
 Author URI: http://solidhex.com
 
@@ -22,9 +22,12 @@ Author URI: http://solidhex.com
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+Updates:
+10.17.11 - Added custom rel attribute support to linked images.
+
 */
 
-function get_attached_images($pageid = FALSE, $size = "thumbnail", $single = FALSE, $prepend = "", $append = "" )
+function get_attached_images($pageid = FALSE, $size = "thumbnail", $rel = 'internal', $single = FALSE, $prepend = "", $append = "")
 {
 	$output = "";
 
@@ -52,7 +55,7 @@ function get_attached_images($pageid = FALSE, $size = "thumbnail", $single = FAL
 			
 			// this is a bit of a hack to see if a link is in the description area
 			if ($link = $image->post_content) {
-				$output .= "{$prepend}<a href='$link' rel='external'>" . wp_get_attachment_image($image->ID, $size)  . "</a>{$caption}{$append}";
+				$output .= "{$prepend}<a href='$link' rel='$rel'>" . wp_get_attachment_image($image->ID, $size)  . "</a>{$caption}{$append}";
 			} else {
 				$output .= $prepend . wp_get_attachment_image($image->ID, $size) . $caption . $append;
 			}
@@ -65,5 +68,22 @@ function get_attached_images($pageid = FALSE, $size = "thumbnail", $single = FAL
 		return false;
 	}
 }
+
+function sc_show_in_post( $atts )
+{
+	extract(shortcode_atts(array(
+		'id'     => '',
+		'size'    => '',
+		'single'  => '',
+		'prepend' => '',
+		'append'  => '' 
+	), $atts ));
+	
+	$out = get_attached_images($id, $size, $single, $prepend, $append);
+	
+	return $out;
+}
+
+add_shortcode( 'get_attached_image_page_post', 'sc_show_in_post' );
 
 ?>
